@@ -1,4 +1,4 @@
-node server express based
+node express server with mysql database(hosted on aws-rds service) 
 
 short brief
 express based server with mysql database hosted on aws rds service with 4 routes
