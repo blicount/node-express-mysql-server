@@ -10,6 +10,16 @@ const db        =require('./dbconnection');
 let log = [];
 let errors = [];
 
+async function handleWord(currentword,currentscore,currenttable){
+    let isexsit = await checkIfWordExist(currenttable,currentword);
+    if(isexsit){
+        updateExistWord(currenttable,currentword,currentscore);
+    }else{
+        insertNewWord(currenttable,currentword,currentscore);    
+    }
+
+}
+
 function checkIfWordExist(table , checkedword){
     return new Promise((resolve , reject) =>{
         db.query(`select * from ${table} where word = '${checkedword}'`,(error, results, fields)=> {
@@ -74,18 +84,9 @@ router.post('/fetch-tweets' , (req,res)=> {
     axios.get('http://api.datamuse.com/words?sp=marketing')
         .then( async response => {
             for(word_index in response.data){
-                let currentword = response.data[word_index].word;
-                let currentscore = response.data[word_index].score;
-                let currenttable = 'marketing';
-                let isexsit = await checkIfWordExist(currenttable,currentword);
-                if(isexsit){
-                    updateExistWord(currenttable,currentword,currentscore);
-                }else{
-                    insertNewWord(currenttable,currentword,currentscore);    
-               }    
+                handleWord(response.data[word_index].word , response.data[word_index].score ,'marketing');       
             }
         })
-
         .catch(err => {
             console.log(err);
             errors.push(err);
@@ -95,18 +96,9 @@ router.post('/fetch-tweets' , (req,res)=> {
     axios.get('http://api.datamuse.com/words?sp=affiliate')
         .then( async response => {
             for(word_index in response.data){
-                let currentword = response.data[word_index].word;
-                let currentscore = response.data[word_index].score;
-                let currenttable = 'affiliate';
-                let isexsit = await checkIfWordExist(currenttable,currentword);
-                if(isexsit){
-                    updateExistWord(currenttable,currentword,currentscore);
-                }else{
-                    insertNewWord(currenttable,currentword,currentscore);    
-               }    
+                handleWord(response.data[word_index].word , response.data[word_index].score ,'affiliate');          
             }
         })
-
         .catch(err => {
             console.log(err);
             errors.push(err);
@@ -116,18 +108,9 @@ router.post('/fetch-tweets' , (req,res)=> {
     axios.get('http://api.datamuse.com/words?sp=influencer')
         .then( async response => {
             for(word_index in response.data){
-                let currentword = response.data[word_index].word;
-                let currentscore = response.data[word_index].score;
-                let currenttable = 'influencer';
-                let isexsit = await checkIfWordExist(currenttable,currentword);
-                if(isexsit){
-                    updateExistWord(currenttable,currentword,currentscore);
-                }else{
-                    insertNewWord(currenttable,currentword,currentscore);    
-               }    
+                handleWord(response.data[word_index].word , response.data[word_index].score ,'influencer');              
             }
         })
-
         .catch(err => {
             console.log(err);
             errors.push(err);
