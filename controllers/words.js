@@ -3,10 +3,6 @@ const router    = express.Router();
 const axios     = require('axios');
 const db        =require('./dbconnection');
 
-
-  
-
-
 let log = [];
 let errors = [];
 
@@ -88,7 +84,6 @@ router.post('/fetch-tweets' , (req,res)=> {
             }
         })
         .catch(err => {
-            console.log(err);
             errors.push(err);
             log.push(' error in insertin word to db check errors route for more details');
         });
@@ -100,7 +95,6 @@ router.post('/fetch-tweets' , (req,res)=> {
             }
         })
         .catch(err => {
-            console.log(err);
             errors.push(err);
             log.push(' error in insertin word to db check errors route for more details');
         });
@@ -112,7 +106,6 @@ router.post('/fetch-tweets' , (req,res)=> {
             }
         })
         .catch(err => {
-            console.log(err);
             errors.push(err);
             log.push(' error in insertin word to db check errors route for more details');
         });        
